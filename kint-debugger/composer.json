@@ -1,0 +1,26 @@
+{
+  "name": "jameelmoses/wordpress-kint-debugger",
+  "description": "WordPress Kint Debugger is a simple wrapper for Kint, a debugging tool to output information about variables and traces in a styled, collapsible format that makes understanding deep arrays and objects easier.",
+  "keywords": [
+    "WP",
+    "Kint",
+    "Debug Bar",
+    "Debugger"
+  ],
+  "homepage": "https://github.com/jameelmoses/wordpress-kint-debugger",
+  "authors": [{
+    "name": "Jameel Moses",
+    "email": "hello@jameelmoses.com",
+    "homepage": "https://github.com/jameelmoses"
+  }],
+  "type": "wordpress-plugin",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0+",
+  "require": {
+    "php": ">=7.1",
+    "kint-php/kint": "^5"
+  },
+  "config": {
+    "optimize-autoloader": true
+  }
+}

@@ -1,0 +1,20 @@
+node_modules
+.vscode
+/.vscode
+.vscode/
+phpcs-reports/
+settings.json
+.vs/
+composer.lock
+package.lock
+package-lock.json
+stylelint.config.js
+*.zip
+phpcs.xml.dist
+vendor
+
+# Playwright
+/playwright/.cache/
+/tests-examples/
+e2e/
+.github/workflows/
