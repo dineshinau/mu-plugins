@@ -119,6 +119,21 @@ if ( ! class_exists( 'DKFWCO_Core' ) ) {
 	}
 }
 
+if(!function_exists('dkwc_log')){
+	function dkwc_log( $message, $level, $context = [] ){
+		$source            = ( is_array( $context ) && ! empty( $context['source'] ) ) ? $context['source'] : 'dkwc';
+		$context['source'] = $source;
+		$logger            = wc_get_logger();
+		$current_user_id   = get_current_user_id();
+
+		$in_action = wp_sprintf( ( /* translators: %s current user id */ esc_html__( 'User in action: %s: ', 'dkwc' ) ), $current_user_id );
+		$message   = $in_action . $message;
+
+		$logger->log( $level, $message, $context );
+	}
+}
+
+
 if ( ! function_exists( 'dkfwco_core' ) ) {
 	/**
 	 * Returning Filter Order Core class.
