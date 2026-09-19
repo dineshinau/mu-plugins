@@ -1,19 +1,20 @@
 <?php
 /**
- * Plugin Name:       Filter WC Orders
- * Plugin URI:        https://dineshinaublog.wordpress.com/filter-wc-orders/
- * Description:       It helps in sorting woocommerce orders based on a payment gateway.
- * Version:           1.0.2
- * Author:            Dinesh Yadav
- * Author URI:        https://dineshinaublog.wordpress.com
- * License:           GPL v2 or later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       filter-wc-orders
- * Domain Path:       /languages
+ * Plugin Name: Filter WC Orders
+ * Plugin URI: https://dineshinaublog.wordpress.com/filter-wc-orders/
+ * Description: It helps in sorting woocommerce orders based on a payment gateway.
+ * Version: 1.0.4
+ * Author: Dinesh Yadav
+ * Author URI: https://dineshinaublog.wordpress.com
+ * Text Domain: filter-wc-orders
+ * Domain Path: /languages
  *
- * Requires at least: 6.8
- * Tested up to: 6.9
+ * Requires at least: 6.5
+ * Tested up to: 7.1
  * Requires PHP: 7.4
+ *
+ * License: GPLv3
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
  * @package filter-wc-orders
  */
@@ -32,7 +33,7 @@ if ( ! class_exists( 'DKFWCO_Core' ) ) {
 		 *
 		 * @var DKFWCO_Core
 		 */
-		public static $_instance = null;
+		public static $inst = null;
 
 		/**
 		 *  Admin instance for this plugin.
@@ -60,7 +61,7 @@ if ( ! class_exists( 'DKFWCO_Core' ) ) {
 		 * Defining constants.
 		 */
 		public function define_plugin_properties() {
-			define( 'DKFWCO_VERSION', '1.0.2' );
+			define( 'DKFWCO_VERSION', '1.0.4' );
 			define( 'DKFWCO_PLUGIN_FILE', __FILE__ );
 			define( 'DKFWCO_PLUGIN_DIR', __DIR__ );
 			define( 'DKFWCO_PLUGIN_SLUG', 'filter-wc-orders' );
@@ -110,29 +111,37 @@ if ( ! class_exists( 'DKFWCO_Core' ) ) {
 		 * @return DKFWCO_Core|null
 		 */
 		public static function get_instance() {
-			if ( null === self::$_instance ) {
-				self::$_instance = new self();
+			if ( null === self::$inst ) {
+				self::$inst = new self();
 			}
 
-			return self::$_instance;
+			return self::$inst;
 		}
 	}
 }
 
-if(!function_exists('dkwc_log')){
-	function dkwc_log( $message, $level, $context = [] ){
+if ( ! function_exists( 'dkwc_log' ) ) {
+	/**
+	 * Logging function for the plugin.
+	 *
+	 * @param string $message Message to log.
+	 * @param string $level Log level.
+	 * @param array  $context Context for the log.
+	 *
+	 * @return void
+	 */
+	function dkwc_log( $message, $level, $context = array() ) {
 		$source            = ( is_array( $context ) && ! empty( $context['source'] ) ) ? $context['source'] : 'dkwc';
 		$context['source'] = $source;
 		$logger            = wc_get_logger();
 		$current_user_id   = get_current_user_id();
 
-		$in_action = wp_sprintf( ( /* translators: %s current user id */ esc_html__( 'User in action: %s: ', 'dkwc' ) ), $current_user_id );
+		$in_action = wp_sprintf( ( /* translators: %s current user id */ esc_html__( 'User in action: %s: ', 'filter-wc-orders' ) ), $current_user_id );
 		$message   = $in_action . $message;
 
 		$logger->log( $level, $message, $context );
 	}
 }
-
 
 if ( ! function_exists( 'dkfwco_core' ) ) {
 	/**
